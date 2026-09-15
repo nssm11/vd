@@ -1,3 +1,14 @@
+/*
+ * Typography is self-hosted rather than pulled in with `next/font/google`.
+ * The Google loader fetches its stylesheet during `next build`, so a build in a
+ * sandbox, a firewalled CI runner or an offline machine fails outright —
+ * "Failed to fetch `DM Sans` from Google Fonts" was enough to stop the whole
+ * site from building. These are the same two variable fonts the reference
+ * design used (weight ranges match the previous `wght@…` requests), served from
+ * our own bundle with `font-display: swap`.
+ */
+@import "@fontsource-variable/dm-sans";
+@import "@fontsource-variable/playfair-display";
 @import "tailwindcss";
 
 @theme {
@@ -14,8 +25,8 @@
   --color-border: #D8D4CC;
   --color-destructive: #c94040;
 
-  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-sans: "DM Sans Variable", "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display Variable", "Playfair Display", ui-serif, Georgia, serif;
 
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;

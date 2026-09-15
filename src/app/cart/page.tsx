@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import ProductImage from "@/components/ProductImage";
 import { ArrowLeft, Trash2, ShoppingBag } from "lucide-react";
 import { CartProvider, useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
@@ -53,7 +53,7 @@ function CartContent() {
                     className="bg-white rounded-3xl p-5 flex items-center gap-5 boty-shadow"
                   >
                     <div className="relative w-20 h-20 rounded-2xl overflow-hidden bg-[#F0EDE7] flex-shrink-0">
-                      <Image
+                      <ProductImage
                         src={item.image}
                         alt={item.name}
                         fill

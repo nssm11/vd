@@ -2,125 +2,17 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { ShoppingBag } from "lucide-react";
+import ProductImage from "@/components/ProductImage";
+import { CATEGORIES, productsByCategory } from "@/data/products";
 import { useCart } from "@/context/CartContext";
-
-interface Product {
-  id: number;
-  slug: string;
-  name: string;
-  description: string;
-  price: string;
-  originalPrice: string | null;
-  category: string;
-  badge: string | null;
-  image: string;
-}
-
-const STATIC_PRODUCTS: Product[] = [
-  {
-    id: 1,
-    slug: "hydra-cream",
-    name: "Hydra Cream",
-    description: "Deep moisture with hyaluronic acid",
-    price: "54.00",
-    originalPrice: null,
-    category: "cream",
-    badge: null,
-    image: "/images/products/hydra-cream.jpg",
-  },
-  {
-    id: 2,
-    slug: "gentle-cleanser",
-    name: "Gentle Cleanser",
-    description: "Soothing botanical wash",
-    price: "38.00",
-    originalPrice: "48.00",
-    category: "cream",
-    badge: "Sale",
-    image: "/images/products/gentle-cleanser.jpg",
-  },
-  {
-    id: 3,
-    slug: "night-cream",
-    name: "Night Cream",
-    description: "Restorative overnight treatment",
-    price: "64.00",
-    originalPrice: null,
-    category: "cream",
-    badge: "Bestseller",
-    image: "/images/products/night-cream.jpg",
-  },
-  {
-    id: 4,
-    slug: "day-cream-spf",
-    name: "Day Cream SPF 30",
-    description: "Protection & hydration",
-    price: "58.00",
-    originalPrice: null,
-    category: "cream",
-    badge: null,
-    image: "/images/products/day-cream-spf.jpg",
-  },
-  {
-    id: 5,
-    slug: "renewal-oil",
-    name: "Renewal Oil",
-    description: "Nourishing botanical face oil",
-    price: "72.00",
-    originalPrice: null,
-    category: "oil",
-    badge: null,
-    image: "/images/products/renewal-oil.jpg",
-  },
-  {
-    id: 6,
-    slug: "rose-hip-oil",
-    name: "Rosehip Oil",
-    description: "Pure cold-pressed rosehip",
-    price: "48.00",
-    originalPrice: null,
-    category: "oil",
-    badge: null,
-    image: "/images/products/rosehip-oil.jpg",
-  },
-  {
-    id: 7,
-    slug: "radiance-serum",
-    name: "Radiance Serum",
-    description: "Brightening vitamin C complex",
-    price: "86.00",
-    originalPrice: null,
-    category: "serum",
-    badge: "New",
-    image: "/images/products/radiance-serum.jpg",
-  },
-  {
-    id: 8,
-    slug: "glow-serum",
-    name: "Glow Serum",
-    description: "Niacinamide & peptide blend",
-    price: "79.00",
-    originalPrice: null,
-    category: "serum",
-    badge: null,
-    image: "/images/products/glow-serum.jpg",
-  },
-];
-
-const TABS = [
-  { label: "Cream", value: "cream" },
-  { label: "Oil", value: "oil" },
-  { label: "Serum", value: "serum" },
-];
 
 export default function ProductGrid() {
   const [activeTab, setActiveTab] = useState("cream");
   const { addItem } = useCart();
   const cardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
-  const filtered = STATIC_PRODUCTS.filter((p) => p.category === activeTab);
+  const filtered = productsByCategory(activeTab);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -148,7 +40,7 @@ export default function ProductGrid() {
     return () => observers.forEach((o) => o.disconnect());
   }, [activeTab]);
 
-  const tabIndex = TABS.findIndex((t) => t.value === activeTab);
+  const tabIndex = CATEGORIES.findIndex((t) => t.value === activeTab);
 
   return (
     <section className="py-24" style={{ backgroundColor: "#F0EDE7" }}>
@@ -176,7 +68,7 @@ export default function ProductGrid() {
                 width: "calc(33.333% - 4px)",
               }}
             />
-            {TABS.map((tab) => (
+            {CATEGORIES.map((tab) => (
               <button
                 key={tab.value}
                 type="button"
@@ -199,14 +91,16 @@ export default function ProductGrid() {
             <a
               key={product.slug}
               href={`/product/${product.slug}`}
-              ref={(el) => { cardRefs.current[i] = el; }}
+              ref={(el) => {
+                cardRefs.current[i] = el;
+              }}
               className="group transition-all duration-500 ease-out"
               style={{ opacity: 0, transform: "scale(0.95)" }}
             >
               <div className="bg-[#F7F4EF] rounded-3xl overflow-hidden boty-shadow boty-transition group-hover:scale-[1.02]">
                 {/* Image */}
                 <div className="relative aspect-square bg-[#E8E4DC] overflow-hidden">
-                  <Image
+                  <ProductImage
                     src={product.image}
                     alt={product.name}
                     fill

@@ -3,6 +3,8 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { Leaf, Flower2, Globe, Recycle } from "lucide-react";
+import LoopingVideo from "@/components/LoopingVideo";
+import { STILLS, VIDEOS } from "@/lib/media";
 
 export default function FeatureSection() {
   const refs = useRef<(HTMLDivElement | null)[]>([]);
@@ -42,18 +44,10 @@ export default function FeatureSection() {
             className="relative rounded-3xl overflow-hidden h-[500px] md:h-auto md:col-span-2 md:row-span-2 transition-all duration-700 ease-out"
             style={{ opacity: 0, transform: "scale(0.95)" }}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
+            <LoopingVideo
+              src={VIDEOS.plantBased}
               className="absolute inset-0 w-full h-full object-cover"
-            >
-              <source
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/c4baaf67-b900-4b90-af2a-daf25a5a4b78-5un5eTbj9Z67qEtEdsQwlYrte9dZM9.mp4"
-                type="video/mp4"
-              />
-            </video>
+            />
             <div className="absolute bottom-8 left-8 right-8 bg-white p-6 shadow-lg rounded-xl">
               <h3 className="text-xl text-[#1a1a1a] mb-2 font-medium">
                 100% <span className="font-serif">Plant-Based</span>
@@ -72,10 +66,16 @@ export default function FeatureSection() {
             style={{ opacity: 0, transform: "scale(0.95)" }}
           >
             <Image
-              src="/images/feature-natural.jpg"
-              alt="Natural ingredients"
+              src={STILLS.featureNatural}
+              alt="Cleansing tubes arranged with dried botanicals"
               fill
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover"
+            />
+            {/* The still is pale at the top-left, so white copy needs a scrim. */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-t from-[#1a1a1a]/85 via-[#1a1a1a]/50 to-[#1a1a1a]/25"
             />
             <div className="relative z-10">
               <h3 className="text-3xl md:text-4xl text-white mb-2">
@@ -107,18 +107,10 @@ export default function FeatureSection() {
             className="rounded-3xl p-6 md:p-8 flex flex-col justify-center relative overflow-hidden md:col-span-2 transition-all duration-700 ease-out"
             style={{ opacity: 0, transform: "scale(0.95)" }}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
+            <LoopingVideo
+              src={VIDEOS.ecoPackaging}
               className="absolute inset-0 w-full h-full object-cover scale-[1.02]"
-            >
-              <source
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/a0b7c364-afa9-4afa-9716-45718578cc01-Ih8UaqQr1bl8aoNlbRha4FgaQ65eXX.mp4"
-                type="video/mp4"
-              />
-            </video>
+            />
             <div className="absolute inset-0 bg-white/10" />
             <div className="relative z-10 flex flex-col justify-center h-full text-left items-start">
               <div className="inline-flex items-center justify-center w-10 h-10 mb-3">
@@ -142,18 +134,10 @@ export default function FeatureSection() {
             className="relative aspect-[4/5] rounded-3xl overflow-hidden boty-shadow transition-all duration-700 ease-out"
             style={{ opacity: 0, transform: "scale(0.95)" }}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
+            <LoopingVideo
+              src={VIDEOS.ritual}
               className="absolute inset-0 w-full h-full object-cover"
-            >
-              <source
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/0c826034-d4f2-4d4f-8e99-50e94e4ce63f-dG1CBOjR36xFPTbhcROrHbomGXtlTQ.mp4"
-                type="video/mp4"
-              />
-            </video>
+            />
           </div>
 
           {/* Text */}

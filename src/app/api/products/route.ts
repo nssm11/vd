@@ -3,6 +3,13 @@ import { db } from "@/db";
 import { products } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
+/**
+ * Served per-request: without this Next tries to run the handler at build time
+ * to snapshot a response, which means a Postgres connection (or a crash) during
+ * `next build`. Matches the existing /api/health route.
+ */
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);

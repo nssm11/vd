@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import LoopingVideo from "@/components/LoopingVideo";
+import { STILLS, VIDEOS } from "@/lib/media";
 
 export default function Hero() {
   return (
@@ -10,11 +12,10 @@ export default function Hero() {
       style={{ backgroundColor: "#e3e1e2" }}
     >
       {/* Background Video */}
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
+      <LoopingVideo
+        src={VIDEOS.hero}
+        preload="auto"
+        poster={STILLS.ctaBanner}
         style={{
           position: "absolute",
           top: "50%",
@@ -26,12 +27,7 @@ export default function Hero() {
           height: "auto",
           objectFit: "cover",
         }}
-      >
-        <source
-          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/f3d8cad2-8091-4809-aac0-eaac74b0be7c-Z4XUCz3CRR7qjaOsoq6rFmbJfIRdgs.mp4"
-          type="video/mp4"
-        />
-      </video>
+      />
 
       {/* Gradient overlay */}
       <div className="absolute bottom-0 left-0 right-0 h-[60%] bg-gradient-to-t from-[#F7F4EF] via-[#F7F4EF]/50 to-transparent" />

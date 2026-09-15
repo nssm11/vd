@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { Leaf, Flower2, Globe } from "lucide-react";
+import { STILLS } from "@/lib/media";
 
 export default function CTABanner() {
   const ref = useRef<HTMLDivElement>(null);
@@ -33,9 +34,10 @@ export default function CTABanner() {
           style={{ opacity: 0, transform: "scale(0.95)" }}
         >
           <Image
-            src="/images/cta-banner.jpg"
-            alt="Natural ingredients"
+            src={STILLS.ctaBanner}
+            alt="Botanical skincare bottles and jars on a sage backdrop"
             fill
+            sizes="(max-width: 1280px) 100vw, 1216px"
             className="object-cover"
           />
           {/* Dark overlay for text legibility */}

@@ -1,101 +1,31 @@
+// `next dev`/`next build` load .env themselves; a bare tsx run does not, and
+// without this the seed could never see DATABASE_URL.
+import "dotenv/config";
 import { db } from "./index";
 import { products, testimonials } from "./schema";
+import { PRODUCTS } from "@/data/products";
 
 async function seed() {
   console.log("Seeding database...");
 
-  // Seed products
-  await db.insert(products).values([
-    {
-      slug: "hydra-cream",
-      name: "Hydra Cream",
-      description: "Deep moisture with hyaluronic acid",
-      price: "54.00",
-      category: "cream",
-      badge: null,
-      image: "/images/products/cream-jars-colored.png",
-      featured: true,
+  // Seed products — one list with the UI (src/data/products.ts), so the API and
+  // the storefront can never disagree on a slug, a price or an image again. The
+  // `image` column holds the absolute media URL on purpose: it is fed straight
+  // into <ProductImage /> by /api/products.
+  await db.insert(products).values(
+    PRODUCTS.map((product) => ({
+      slug: product.slug,
+      name: product.name,
+      description: product.description,
+      price: product.price,
+      originalPrice: product.originalPrice,
+      category: product.category,
+      badge: product.badge,
+      image: product.image,
+      featured: product.category === "cream",
       inStock: true,
-    },
-    {
-      slug: "gentle-cleanser",
-      name: "Gentle Cleanser",
-      description: "Soothing botanical wash",
-      price: "38.00",
-      originalPrice: "48.00",
-      category: "cream",
-      badge: "Sale",
-      image: "/images/products/tube-bottles.png",
-      featured: true,
-      inStock: true,
-    },
-    {
-      slug: "night-cream",
-      name: "Night Cream",
-      description: "Restorative overnight treatment",
-      price: "64.00",
-      category: "cream",
-      badge: "Bestseller",
-      image: "/images/products/jars-wooden-lid.png",
-      featured: true,
-      inStock: true,
-    },
-    {
-      slug: "day-cream-spf",
-      name: "Day Cream SPF 30",
-      description: "Protection & hydration",
-      price: "58.00",
-      category: "cream",
-      badge: null,
-      image: "/images/products/pump-bottles-lavender.png",
-      featured: true,
-      inStock: true,
-    },
-    {
-      slug: "renewal-oil",
-      name: "Renewal Oil",
-      description: "Nourishing botanical face oil",
-      price: "72.00",
-      category: "oil",
-      badge: null,
-      image: "/images/products/oil-bottle.png",
-      featured: false,
-      inStock: true,
-    },
-    {
-      slug: "radiance-serum",
-      name: "Radiance Serum",
-      description: "Brightening vitamin C complex",
-      price: "86.00",
-      category: "serum",
-      badge: "New",
-      image: "/images/products/serum-bottle.png",
-      featured: false,
-      inStock: true,
-    },
-    {
-      slug: "glow-serum",
-      name: "Glow Serum",
-      description: "Niacinamide & peptide blend",
-      price: "79.00",
-      category: "serum",
-      badge: null,
-      image: "/images/products/glow-serum.png",
-      featured: false,
-      inStock: true,
-    },
-    {
-      slug: "rose-hip-oil",
-      name: "Rosehip Oil",
-      description: "Pure cold-pressed rosehip",
-      price: "48.00",
-      category: "oil",
-      badge: null,
-      image: "/images/products/rosehip-oil.png",
-      featured: false,
-      inStock: true,
-    },
-  ]).onConflictDoNothing();
+    }))
+  ).onConflictDoNothing();
 
   // Seed testimonials
   await db.insert(testimonials).values([

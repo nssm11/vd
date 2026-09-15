@@ -2,25 +2,15 @@
 
 import { use, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowLeft, ShoppingBag, Leaf, Flower2, Globe, Check } from "lucide-react";
 import { CartProvider, useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
-const ALL_PRODUCTS = [
-  { id: 1, slug: "hydra-cream", name: "Hydra Cream", description: "Deep moisture with hyaluronic acid", longDescription: "Our Hydra Cream delivers 72-hour moisture retention through a potent blend of hyaluronic acid, aloe vera, and shea butter. Perfect for dry and combination skin types, this lightweight cream absorbs quickly to leave skin plump, soft, and visibly hydrated.", price: "54.00", originalPrice: null, category: "cream", badge: null, image: "/images/products/hydra-cream.jpg", ingredients: ["Hyaluronic Acid", "Aloe Vera", "Shea Butter", "Jojoba Oil", "Vitamin E"] },
-  { id: 2, slug: "gentle-cleanser", name: "Gentle Cleanser", description: "Soothing botanical wash", longDescription: "A gentle, soap-free cleanser formulated for sensitive skin. Our blend of chamomile, calendula, and oat extract removes impurities without stripping the skin's natural moisture barrier, leaving your complexion clean, calm, and balanced.", price: "38.00", originalPrice: "48.00", category: "cream", badge: "Sale", image: "/images/products/gentle-cleanser.jpg", ingredients: ["Chamomile Extract", "Calendula", "Oat Extract", "Aloe Vera", "Rose Water"] },
-  { id: 3, slug: "night-cream", name: "Night Cream", description: "Restorative overnight treatment", longDescription: "While you sleep, our Night Cream works to restore and replenish your skin. Enriched with retinol-alternative bakuchiol, peptides, and nourishing plant oils, this rich formula supports cell renewal for a visibly refreshed, glowing complexion by morning.", price: "64.00", originalPrice: null, category: "cream", badge: "Bestseller", image: "/images/products/night-cream.jpg", ingredients: ["Bakuchiol", "Peptide Complex", "Rosehip Oil", "Squalane", "Vitamin C"] },
-  { id: 4, slug: "day-cream-spf", name: "Day Cream SPF 30", description: "Protection & hydration", longDescription: "All-in-one daily moisturizer with broad-spectrum SPF 30 protection. Lightweight and non-greasy, it hydrates, protects, and primes your skin for the day ahead. Enriched with antioxidant-rich green tea and niacinamide.", price: "58.00", originalPrice: null, category: "cream", badge: null, image: "/images/products/day-cream-spf.jpg", ingredients: ["Zinc Oxide", "Niacinamide", "Green Tea Extract", "Hyaluronic Acid", "Vitamin B5"] },
-  { id: 5, slug: "renewal-oil", name: "Renewal Oil", description: "Nourishing botanical face oil", longDescription: "A luxurious blend of seven cold-pressed botanical oils that deeply nourish, restore and add a natural luminosity to your skin. Suitable for all skin types, it absorbs rapidly without leaving any greasy residue.", price: "72.00", originalPrice: null, category: "oil", badge: null, image: "/images/products/renewal-oil.jpg", ingredients: ["Rosehip Oil", "Argan Oil", "Sea Buckthorn", "Jojoba Oil", "Marula Oil"] },
-  { id: 6, slug: "rose-hip-oil", name: "Rosehip Oil", description: "Pure cold-pressed rosehip", longDescription: "100% pure, cold-pressed rosehip seed oil — nature's most powerful skin restorative. Rich in vitamins A, C, and E plus essential fatty acids, it visibly reduces fine lines and evens skin tone with consistent use.", price: "48.00", originalPrice: null, category: "oil", badge: null, image: "/images/products/rosehip-oil.jpg", ingredients: ["Rosehip Seed Oil (100%)", "Vitamin A", "Vitamin C", "Vitamin E", "Omega-3"] },
-  { id: 7, slug: "radiance-serum", name: "Radiance Serum", description: "Brightening vitamin C complex", longDescription: "A powerhouse brightening serum featuring 15% stabilized Vitamin C, ferulic acid, and turmeric extract. It visibly fades dark spots, evens skin tone, and boosts natural radiance for a luminous, glass-skin effect.", price: "86.00", originalPrice: null, category: "serum", badge: "New", image: "/images/products/radiance-serum.jpg", ingredients: ["Vitamin C 15%", "Ferulic Acid", "Turmeric Extract", "Niacinamide", "Hyaluronic Acid"] },
-  { id: 8, slug: "glow-serum", name: "Glow Serum", description: "Niacinamide & peptide blend", longDescription: "A multi-action serum combining 10% niacinamide with a comprehensive peptide complex to minimize pores, reduce redness, and improve skin texture. Clinically shown to improve skin clarity in just 4 weeks.", price: "79.00", originalPrice: null, category: "serum", badge: null, image: "/images/products/glow-serum.jpg", ingredients: ["Niacinamide 10%", "Peptide Complex", "Zinc PCA", "Panthenol", "Allantoin"] },
-];
+import ProductImage from "@/components/ProductImage";
+import { findProduct, relatedProducts as findRelated } from "@/data/products";
 
 function ProductContent({ slug }: { slug: string }) {
-  const product = ALL_PRODUCTS.find((p) => p.slug === slug);
+  const product = findProduct(slug);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const { addItem } = useCart();
@@ -51,9 +41,7 @@ function ProductContent({ slug }: { slug: string }) {
     setTimeout(() => setAdded(false), 2000);
   };
 
-  const relatedProducts = ALL_PRODUCTS.filter(
-    (p) => p.category === product.category && p.slug !== product.slug
-  ).slice(0, 3);
+  const relatedProducts = findRelated(product);
 
   return (
     <>
@@ -72,7 +60,7 @@ function ProductContent({ slug }: { slug: string }) {
           <div className="grid lg:grid-cols-2 gap-16 mb-24">
             {/* Image */}
             <div className="relative aspect-square rounded-3xl overflow-hidden bg-[#F0EDE7] boty-shadow">
-              <Image
+              <ProductImage
                 src={product.image}
                 alt={product.name}
                 fill
@@ -209,7 +197,7 @@ function ProductContent({ slug }: { slug: string }) {
                   <Link key={p.slug} href={`/product/${p.slug}`} className="group">
                     <div className="bg-white rounded-3xl overflow-hidden boty-shadow boty-transition group-hover:scale-[1.02]">
                       <div className="relative aspect-square bg-[#F0EDE7] overflow-hidden">
-                        <Image
+                        <ProductImage
                           src={p.image}
                           alt={p.name}
                           fill

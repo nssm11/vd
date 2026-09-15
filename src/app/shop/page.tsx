@@ -2,36 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { ShoppingBag, ArrowLeft } from "lucide-react";
 import { CartProvider, useCart } from "@/context/CartContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ProductImage from "@/components/ProductImage";
+import { productsByCategory, type Product } from "@/data/products";
 
-interface Product {
-  id: number;
-  slug: string;
-  name: string;
-  description: string;
-  price: string;
-  originalPrice: string | null;
-  category: string;
-  badge: string | null;
-  image: string;
-}
-
-const ALL_PRODUCTS: Product[] = [
-  { id: 1, slug: "hydra-cream", name: "Hydra Cream", description: "Deep moisture with hyaluronic acid", price: "54.00", originalPrice: null, category: "cream", badge: null, image: "/images/products/hydra-cream.jpg" },
-  { id: 2, slug: "gentle-cleanser", name: "Gentle Cleanser", description: "Soothing botanical wash", price: "38.00", originalPrice: "48.00", category: "cream", badge: "Sale", image: "/images/products/gentle-cleanser.jpg" },
-  { id: 3, slug: "night-cream", name: "Night Cream", description: "Restorative overnight treatment", price: "64.00", originalPrice: null, category: "cream", badge: "Bestseller", image: "/images/products/night-cream.jpg" },
-  { id: 4, slug: "day-cream-spf", name: "Day Cream SPF 30", description: "Protection & hydration", price: "58.00", originalPrice: null, category: "cream", badge: null, image: "/images/products/day-cream-spf.jpg" },
-  { id: 5, slug: "renewal-oil", name: "Renewal Oil", description: "Nourishing botanical face oil", price: "72.00", originalPrice: null, category: "oil", badge: null, image: "/images/products/renewal-oil.jpg" },
-  { id: 6, slug: "rose-hip-oil", name: "Rosehip Oil", description: "Pure cold-pressed rosehip", price: "48.00", originalPrice: null, category: "oil", badge: null, image: "/images/products/rosehip-oil.jpg" },
-  { id: 7, slug: "radiance-serum", name: "Radiance Serum", description: "Brightening vitamin C complex", price: "86.00", originalPrice: null, category: "serum", badge: "New", image: "/images/products/radiance-serum.jpg" },
-  { id: 8, slug: "glow-serum", name: "Glow Serum", description: "Niacinamide & peptide blend", price: "79.00", originalPrice: null, category: "serum", badge: null, image: "/images/products/glow-serum.jpg" },
-];
-
-const CATEGORIES = [
+/**
+ * The catalogue lives in `src/data/products.ts` so the shop, the home grid and
+ * the product pages cannot drift apart (they used to each carry their own copy,
+ * and each pointed at a different set of missing image files).
+ */
+const FILTERS = [
   { label: "All", value: "all" },
   { label: "Creams", value: "cream" },
   { label: "Oils", value: "oil" },
@@ -43,9 +26,7 @@ function ShopContent() {
   const [added, setAdded] = useState<number | null>(null);
   const { addItem } = useCart();
 
-  const filtered = activeCategory === "all"
-    ? ALL_PRODUCTS
-    : ALL_PRODUCTS.filter((p) => p.category === activeCategory);
+  const filtered = productsByCategory(activeCategory);
 
   const handleAdd = (product: Product) => {
     addItem({
@@ -82,7 +63,7 @@ function ShopContent() {
 
           {/* Filter Tabs */}
           <div className="flex flex-wrap gap-3 mb-10">
-            {CATEGORIES.map((cat) => (
+            {FILTERS.map((cat) => (
               <button
                 key={cat.value}
                 type="button"
@@ -104,7 +85,7 @@ function ShopContent() {
               <div key={product.slug} className="group">
                 <div className="bg-white rounded-3xl overflow-hidden boty-shadow boty-transition group-hover:scale-[1.02]">
                   <div className="relative aspect-square bg-[#F0EDE7] overflow-hidden">
-                    <Image
+                    <ProductImage
                       src={product.image}
                       alt={product.name}
                       fill
