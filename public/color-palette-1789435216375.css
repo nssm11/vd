@@ -1,0 +1,53 @@
+/* Color Palette - Extracted by MiroMiro */
+/* Generated on 9/14/2026 */
+
+:root {
+  /* Colors */
+  --color-1: #D8CFC4;
+  --color-2: #2C2C2C;
+  --color-3: #F7F4EF;
+  --color-4: #6B6560;
+  --color-5: #000000;
+  --color-6: #4F5B3A;
+  --color-7: #FFFFFF;
+  --color-8: #2C2C2CCC;
+  --color-9: #FFFFFFE6;
+  --color-10: #4F5B3A0D;
+  --color-11: #4F5B3AB3;
+  --color-12: #2C2C2CB3;
+  --color-13: lab(91.055 0.663072 0.865579);
+  --color-14: #D8CFC480;
+  --color-15: #2C2C2C99;
+  --color-16: #0000000F;
+  --color-17: #1D1D1F;
+  --color-18: #EDE6DC;
+  --color-19: #2C2C2C33;
+  --color-20: #FFFFFF52;
+  --color-21: #F7F4EF33;
+  --color-22: #6366F133;
+  --color-23: #00000014;
+  --color-24: #F7F4EFE6;
+  --color-25: lab(98.2686 -0.0991821 0.364304);
+  --color-26: #E3E1E2;
+  --color-27: #FFFFFFB3;
+  --color-28: #3C3C4380;
+  --color-29: #0000000D;
+  --color-30: #FFFFFF66;
+  --color-31: #F7F4EF1A;
+  --color-32: #FFFFFFEB;
+  --color-33: #6366F11A;
+  --color-34: #76768014;
+  --color-35: #7676801A;
+  --color-36: #A65D57;
+  --color-37: #F7F4EFCC;
+  --color-38: #F7F4EF99;
+  --color-39: #FFFFFF33;
+  --color-40: #4F46E5;
+  --color-41: #3C3C4373;
+  --color-42: #3C3C4399;
+
+  /* Gradients */
+  --gradient-1: linear-gradient(to top, rgb(247, 244, 239) 0%, oklab(0.968072 0.00123459 0.0073058 / 0.5) 50%, rgba(0, 0, 0, 0) 100%);
+  --gradient-2: linear-gradient(in oklab, rgb(247, 244, 239) 0%, rgba(0, 0, 0, 0) 100%);
+  --gradient-3: linear-gradient(to top in oklab, rgb(247, 244, 239) 0%, rgba(0, 0, 0, 0) 100%);
+}
