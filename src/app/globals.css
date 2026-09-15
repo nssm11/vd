@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #F7F4EF;
+  --color-foreground: #1a1a1a;
+  --color-card: #F0EDE7;
+  --color-card-foreground: #1a1a1a;
+  --color-primary: #8B7355;
+  --color-primary-foreground: #F7F4EF;
+  --color-muted: #E8E4DC;
+  --color-muted-foreground: #6b6560;
+  --color-accent: #D4C5A9;
+  --color-accent-foreground: #1a1a1a;
+  --color-border: #D8D4CC;
+  --color-destructive: #c94040;
+
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+}
+
+@layer utilities {
+  .boty-transition {
+    transition: all 0.3s ease;
+  }
+
+  .boty-shadow {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  }
+
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+}
+
+/* Keyframe Animations */
+@keyframes blur-in {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scroll-down {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes scroll-up {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes float-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-blur-in {
+  animation: blur-in 0.8s ease forwards;
+}
+
+.animate-scale-fade-in {
+  animation: scale-fade-in 0.6s ease forwards;
+}
+
+.animate-scroll-down {
+  animation: scroll-down 30s linear infinite;
+}
+
+.animate-scroll-up {
+  animation: scroll-up 30s linear infinite;
+}
+
+.animate-scroll-down-slow {
+  animation: scroll-down 60s linear infinite;
+}
+
+.animate-scroll-up-slow {
+  animation: scroll-up 60s linear infinite;
+}
+
+.animate-float-up {
+  animation: float-up 0.7s ease forwards;
+}
+
+/* Intersection observer triggered animations */
+.observe-fade {
+  opacity: 0;
+  transform: translateY(32px) scale(0.95);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.observe-fade.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
